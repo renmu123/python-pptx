@@ -323,10 +323,10 @@ class PicturePlaceholder(_BaseSlidePlaceholder):
         :attr:`~._BaseSlidePlaceholder.shape_type` property is
         `MSO_SHAPE_TYPE.PLACEHOLDER` instead of `MSO_SHAPE_TYPE.PICTURE`.
         """
-        pic = self._new_placeholder_pic(image_file, crop, vcenter, hcente) # pass new parameter "method"
+        pic = self._new_placeholder_pic(image_file, crop, vcenter, hcenter) # pass new parameter "method"
         self._replace_placeholder_with(pic)
         return PlaceholderPicture(pic, self._parent)
-    def _new_placeholder_pic(self, image_file, crop=True, vcenter=False, hcenter=False)):
+    def _new_placeholder_pic(self, image_file, crop=True, vcenter=False, hcenter=False):
         """
         Return a new `p:pic` element depicting the image in *image_file*,
         suitable for use as a placeholder. In particular this means not
@@ -342,7 +342,7 @@ class PicturePlaceholder(_BaseSlidePlaceholder):
         id_, name = self.shape_id, self.name
         # Cropping the image, as in the original file
         if crop:
-            pic = CT_Picture.new_ph_pic(shape_id, name, desc, rId)
+            pic = CT_Picture.new_ph_pic(self.shape_id, name, desc, rId)
             pic.crop_to_fit(image_size, (self.width, self.height))
         else:
             ph_w, ph_h = self.width, self.height
@@ -368,7 +368,7 @@ class PicturePlaceholder(_BaseSlidePlaceholder):
                 if vcenter:
                     top = top + (ph_h - h) / 2
 
-            pic = CT_Picture.new_pic(shape_id, name, desc, rId, left, top, w, h)
+            pic = CT_Picture.new_pic(self.shape_id, name, desc, rId, left, top, w, h)
         return pic
 
     def _get_or_add_image(self, image_file):
